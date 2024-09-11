@@ -1,6 +1,6 @@
 import os
 import PyPDF2
-##from openai import OpenAI
+import streamlit as st
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
@@ -42,11 +42,8 @@ def create_vector_store(texts, persist_directory="db"):
     return db
 
 # Step 5: Initialize RetrievalQA Chain
-
 def initialize_qa_chain(vector_store):
-    # Assuming `OpenAI` from langchain is compatible with your local LLM
     llm = OpenAI(api_key="lm-studio", base_url="http://localhost:1234/v1", model="techcodebhavesh/AutoDashAnalyticsV1GGUF")
-    
     qa = RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",
@@ -54,53 +51,44 @@ def initialize_qa_chain(vector_store):
         return_source_documents=True
     )
     return qa
+
 # Step 6: Query the QA System
 def query_qa_system(qa_chain, question):
     response = qa_chain({"query": question})
     return response
 
-# Step 7: Main Function to Integrate All Steps
+# Streamlit Interface
 def main():
-    pdf_directory = input("Enter the path to the PDF directory: ")  # e.g., "pdfs"
-    
-    print("Extracting text from PDFs...")
-    documents = extract_text_from_pdfs(pdf_directory)
-    
-    print("Splitting documents into chunks...")
-    texts = split_documents(documents)
-    
-    print("Creating vector store with embeddings...")
-    vector_store = create_vector_store(texts)
-    
-    print("Initializing QA chain...")
-    qa_chain = initialize_qa_chain(vector_store)
-    
-    print("Setup complete. You can now ask questions about the PDFs.")
-    
-    # Continuous Chat Loop
-    history = [
-        {"role": "system", "content": "You are an intelligent assistant. You always provide well-reasoned answers that are both correct and helpful."},
-        {"role": "user", "content": "Hello, introduce yourself to someone opening this program for the first time. Be concise."},
-    ]
-    
-    while True:
-        question = input("Ask a question about the PDFs (type 'exit' to quit): ")
-        if question.lower() == 'exit':
-            break
-        
-        # Add the user's question to history
-        history.append({"role": "user", "content": question})
-        
-        # Get the response from the QA system
-        answer = query_qa_system(qa_chain, question)
-        answer_text = answer['result']
-        
-        # Print the model's response
-        print(f"LLM: {answer_text}\n")
-        
-        # Add the assistant's response to history
-        history.append({"role": "assistant", "content": answer_text})
+    st.title("PDF QA System")
+
+    # Session state to keep track of `qa_chain`
+    if 'qa_chain' not in st.session_state:
+        st.session_state.qa_chain = None
+
+    st.sidebar.header("Upload PDF Directory")
+    pdf_directory = st.sidebar.text_input("Enter the path to the PDF directory:", value="pdfs")
+
+    if st.sidebar.button("Process PDFs"):
+        if not os.path.isdir(pdf_directory):
+            st.sidebar.error("Invalid directory path. Please check and try again.")
+        else:
+            st.sidebar.text("Processing PDFs...")
+            documents = extract_text_from_pdfs(pdf_directory)
+            texts = split_documents(documents)
+            vector_store = create_vector_store(texts)
+            st.session_state.qa_chain = initialize_qa_chain(vector_store)
+            st.sidebar.text("Setup complete. You can now ask questions.")
+
+    question = st.text_input("Ask a question about the PDFs:")
+    if st.button("Get Answer"):
+        if st.session_state.qa_chain:
+            if question:
+                answer = query_qa_system(st.session_state.qa_chain, question)
+                st.write(f"**Answer:** {answer['result']}")
+            else:
+                st.write("Please enter a question.")
+        else:
+            st.write("Please process PDFs first.")
 
 if __name__ == "__main__":
     main()
- 
