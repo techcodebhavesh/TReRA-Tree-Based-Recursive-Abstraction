@@ -78,6 +78,7 @@ def query_groq_model_with_context(system_message, user_query, context):
     return chat_completion.choices[0].message.content
 
 
+
 # Step 6: Main Function to Integrate All Steps
 def main():
     pdf_directory = input("Enter the path to the PDF directory: ")  # e.g., "pdfs"
