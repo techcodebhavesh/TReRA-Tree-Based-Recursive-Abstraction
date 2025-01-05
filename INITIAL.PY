@@ -1,15 +1,17 @@
 import os
 import PyPDF2
-##from openai import OpenAI
+from dotenv import load_dotenv
+from groq import Groq
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.schema import Document
-from langchain.chains import RetrievalQA
-from langchain_openai import OpenAI
 
-# Step 1: Configure OpenAI Client to Point to Local LLM (Llama Studio)
-client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
+# Load environment variables
+load_dotenv()
+
+# Step 1: Configure Groq Client
+groq_client = Groq()
 
 # Step 2: Function to Extract Text from Multiple PDFs
 def extract_text_from_pdfs(pdf_directory):
@@ -41,25 +43,42 @@ def create_vector_store(texts, persist_directory="db"):
     db.persist()
     return db
 
-# Step 5: Initialize RetrievalQA Chain
+def retrieve_relevant_chunks(vector_store, query, k=5):
+    """
+    Retrieve the most relevant chunks from the vector store.
+    """
+    docs = vector_store.similarity_search(query, k=k)
+    return "\n".join([doc.page_content for doc in docs])
 
-def initialize_qa_chain(vector_store):
-    # Assuming `OpenAI` from langchain is compatible with your local LLM
-    llm = OpenAI(api_key="lm-studio", base_url="http://localhost:1234/v1", model="techcodebhavesh/AutoDashAnalyticsV1GGUF")
+
+# Step 5: Query Groq Model
+def query_groq_model_with_context(system_message, user_query, context):
+    client = Groq(api_key=os.environ.get("GROQ_API_KEY"))  # Initialize the Groq client
     
-    qa = RetrievalQA.from_chain_type(
-        llm=llm,
-        chain_type="stuff",
-        retriever=vector_store.as_retriever(),
-        return_source_documents=True
+    print("*** Groq Model Query ***")
+    print("Context:", context)
+    print("Question:", user_query)
+    print("System Message:", system_message)
+    print("Querying Groq model...")
+    print("*** Groq Model Query ***")
+    
+    # Construct the prompt messages
+    messages = [
+        {"role": "system", "content": system_message},
+        {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {user_query}"},
+    ]
+    
+    # Call the Groq API for chat completions
+    chat_completion = client.chat.completions.create(
+        messages=messages,
+        model="llama3-8b-8192"  # Specify the model you want to use
     )
-    return qa
-# Step 6: Query the QA System
-def query_qa_system(qa_chain, question):
-    response = qa_chain({"query": question})
-    return response
+    
+    # Extract and return the response content
+    return chat_completion.choices[0].message.content
 
-# Step 7: Main Function to Integrate All Steps
+
+# Step 6: Main Function to Integrate All Steps
 def main():
     pdf_directory = input("Enter the path to the PDF directory: ")  # e.g., "pdfs"
     
@@ -72,35 +91,23 @@ def main():
     print("Creating vector store with embeddings...")
     vector_store = create_vector_store(texts)
     
-    print("Initializing QA chain...")
-    qa_chain = initialize_qa_chain(vector_store)
-    
     print("Setup complete. You can now ask questions about the PDFs.")
     
     # Continuous Chat Loop
-    history = [
-        {"role": "system", "content": "You are an intelligent assistant. You always provide well-reasoned answers that are both correct and helpful."},
-        {"role": "user", "content": "Hello, introduce yourself to someone opening this program for the first time. Be concise."},
-    ]
-    
+    system_message = "You are an intelligent assistant. Provide clear, concise, and accurate answers."
     while True:
-        question = input("Ask a question about the PDFs (type 'exit' to quit): ")
-        if question.lower() == 'exit':
+        user_query = input("Ask a question about the PDFs (type 'exit' to quit): ")
+        if user_query.lower() == 'exit':
             break
         
-        # Add the user's question to history
-        history.append({"role": "user", "content": question})
+        print("Retrieving relevant chunks...")
+        context = retrieve_relevant_chunks(vector_store, user_query)
         
-        # Get the response from the QA system
-        answer = query_qa_system(qa_chain, question)
-        answer_text = answer['result']
+        print("Querying Groq model...")
+        answer = query_groq_model_with_context(system_message, user_query, context)
         
-        # Print the model's response
-        print(f"LLM: {answer_text}\n")
-        
-        # Add the assistant's response to history
-        history.append({"role": "assistant", "content": answer_text})
+        print(f"Groq Llama: {answer}\n")
+
 
 if __name__ == "__main__":
     main()
- 
