@@ -1,0 +1,15 @@
+Activity,Status,solution
+Vendor rejection stock exempt from MRP,completed,"Material Master MRP 4 , select Sloc  indicator 2"
+ROP Packaging,completed,"Material Master -MRP type VB, Lot - Fix, Enter Reorder quantity, Reorder point, Z3 Availability check, Strategy group Z7"
+Default Paramaters for PO release Buyer,completed,"ME23n, update personal settings"
+PO Tax code missing conditions updated in info record,completed,ME12 update tax code
+COO fixation,completed,Material Master Foreign Trade view update COO
+TESOG Auto PO creation,completed,"Tick Auto PO in MM Purchase view, MRP group z100"
+"Auto PO  0943 to Hungary 0809  email to Kris, pn 2236517-1 ",completed,"cannot activate , need to use ZAPO"
+Weight report for Sustainability,completed,zmm3tr251 
+"ZV14 table missing in plant mt10, customer 1349550",completed,update ZV14 table
+"ZITO order Shirwal to Wagholi, error - EN",complete,"Me23n , tick Plant override ZITO, and give plant no."
+"ZITO order Shirwal to Wagholi, not reflecting",complete,Release block 55 - T code ZATP
+Third party PO without price though info record has price,complete,"open PO ME23n, PO line untick  for FOC"
+Interco PO without price,complete,"open PO ME23n, PO line untick  for FOC"
+Biszol - Invoice without price,complete,Bizsol issue update sales org in Bizol system
