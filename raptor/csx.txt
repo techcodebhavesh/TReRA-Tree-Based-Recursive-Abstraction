@@ -1,4 +1,4 @@
-# Create Material Master – company code level
+# Create Material Master ï¿½ company code level
 
 ### Covers process: 0211 create material master
 
@@ -19,28 +19,28 @@
 
  Create new materials via ZCML
 
- • ZCML Overview & Purpose
+ ï¿½ ZCML Overview & Purpose
 
- • ZCML Initial Screen
+ ï¿½ ZCML Initial Screen
 
- • ZCML Source Selection
+ ï¿½ ZCML Source Selection
 
- • ZCML Sales Data
+ ï¿½ ZCML Sales Data
 
- • ZCML Purchasing & MRP Data
+ ï¿½ ZCML Purchasing & MRP Data
 
- • ZCML Work Scheduling & Quality Data
+ ï¿½ ZCML Work Scheduling & Quality Data
 
- • ZCML Accounting & Costing Data
+ ï¿½ ZCML Accounting & Costing Data
 
 
 ### Defaulting ZCML values via ZDML
 
- • ZDML Overview & Purpose
+ ï¿½ ZDML Overview & Purpose
 
- • ZDML – Create Default Values
+ ï¿½ ZDML ï¿½ Create Default Values
 
- • ZDML default values vs TPEX data
+ ï¿½ ZDML default values vs TPEX data
 
  Defaulting ZCML MRP values via MRP profile
 
@@ -61,9 +61,9 @@
 
  transactions
 
- 1. ZCML – create material master
+ 1. ZCML ï¿½ create material master
 
- 2. ZDML – create default values
+ 2. ZDML ï¿½ create default values
 
 
 -----
@@ -118,15 +118,15 @@
 
  Value proposals gathered from
 
- • Tyco Electronics Data warehouse (TED),
+ ï¿½ Tyco Electronics Data warehouse (TED),
 
- • Transfer Pricing Excellence database (TPEX),
+ ï¿½ Transfer Pricing Excellence database (TPEX),
 
- • Material Master Default Values custom table (ZMMDEFAULT),
+ ï¿½ Material Master Default Values custom table (ZMMDEFAULT),
 
- • User Parameters (PIDs) and
+ ï¿½ User Parameters (PIDs) and
 
- • MRP Profiles
+ ï¿½ MRP Profiles
 
  User can review and modify the proposed values within a single screen.
 
@@ -141,15 +141,15 @@
 
  Plant ID to create views like
 
-##### • Sales Plant and Foreign views
+##### ï¿½ Sales Plant and Foreign views
 
- • Purchasing view
+ ï¿½ Purchasing view
 
- • MRP views
+ ï¿½ MRP views
 
- • Costing / Accounting views
+ ï¿½ Costing / Accounting views
 
- • Storage / Warehouse views
+ ï¿½ Storage / Warehouse views
 
 #### Sales Org and Distr. Channel to create Sales Org views
 
@@ -164,9 +164,9 @@
 
 #### You can copy
 
-##### • defaults from an existing MRP profile
+##### ï¿½ defaults from an existing MRP profile
 
- • data from an existing material number
+ ï¿½ data from an existing material number
 
 
 -----
@@ -188,9 +188,9 @@
 
  Enter the required data
 
-#### • some data could be already filed in
+#### ï¿½ some data could be already filed in
 
- » verify them
+ ï¿½ verify them
 
 
 -----
@@ -199,21 +199,21 @@
 
 ### Enter the required data
 
-#### • some data could be already filed in
+#### ï¿½ some data could be already filed in
 
- » verify them
+ ï¿½ verify them
 
- • Purchasing
+ ï¿½ Purchasing
 
-##### • No PUR View: by putting flag into it no purchasing views will be created
+##### ï¿½ No PUR View: by putting flag into it no purchasing views will be created
 
-#### • MRP1
+#### ï¿½ MRP1
 
- • MRP2
+ ï¿½ MRP2
 
-##### • GIATP values 100
+##### ï¿½ GIATP values 100
 
-#### • MRP3
+#### ï¿½ MRP3
 
 
 -----
@@ -222,19 +222,19 @@
 
 ### Enter the required data
 
-#### • some data could be already filed in
+#### ï¿½ some data could be already filed in
 
- » verify them
+ ï¿½ verify them
 
- • Work scheduling for in-house produced parts
+ ï¿½ Work scheduling for in-house produced parts
 
-##### • For F parts it is recommended to flag „No Work Schd View“
+##### ï¿½ For F parts it is recommended to flag ï¿½No Work Schd Viewï¿½
 
- • If work scheduling view needs to be created the field „Primary Mfg Bldg“ needs to be maintained
+ ï¿½ If work scheduling view needs to be created the field ï¿½Primary Mfg Bldgï¿½ needs to be maintained
 
-#### • Quality
+#### ï¿½ Quality
 
-##### • If quality is required put flag
+##### ï¿½ If quality is required put flag
 
 
 -----
@@ -243,32 +243,32 @@
 
 ### Enter the required data
 
-#### • some data could be already filed in
+#### ï¿½ some data could be already filed in
 
- » verify them
+ ï¿½ verify them
 
- • Accounting 1
+ ï¿½ Accounting 1
 
- • Costing 1
+ ï¿½ Costing 1
 
-##### • P-S matl status set to 03
+##### ï¿½ P-S matl status set to 03
 
- • after material costing has to be removed
+ ï¿½ after material costing has to be removed
 
- • Cstg Lot Size needs to be in synch with „Price Unit“
+ ï¿½ Cstg Lot Size needs to be in synch with ï¿½Price Unitï¿½
 
-#### • Storage Location
+#### ï¿½ Storage Location
 
-##### • Enter all storage locations which need to be created for material
+##### ï¿½ Enter all storage locations which need to be created for material
 
- • At least storage locations entered on MRP1 have to be entered here
+ ï¿½ At least storage locations entered on MRP1 have to be entered here
 
-#### • Warehouse 1 if required
+#### ï¿½ Warehouse 1 if required
 
 
 -----
 
-## ZCML – create material master
+## ZCML ï¿½ create material master
 
 #### DEMO
 
@@ -291,57 +291,57 @@
 
 -----
 
-## ZDML – Create Default Values
+## ZDML ï¿½ Create Default Values
 
-### • Enter plant id and profit center id
+### ï¿½ Enter plant id and profit center id
 
- • You can maintain default values for
+ ï¿½ You can maintain default values for
 
-#### • Sales Org Views 1 & 2
+#### ï¿½ Sales Org Views 1 & 2
 
- • Sales Plant Views
+ ï¿½ Sales Plant Views
 
- • Foreign Trade
-
-
------
-
-## ZDML – Create Default Values
-
-### • You can maintain default values for
-
-#### • Purchasing View
-
-##### • Flag would deactivate Purchasing View creation
-
-#### • MRP1
-
- • MRP2
-
- • MRP3
-
- • MRP4
+ ï¿½ Foreign Trade
 
 
 -----
 
-## ZDML – Create Default Values
+## ZDML ï¿½ Create Default Values
 
-### • You can maintain default values for
+### ï¿½ You can maintain default values for
 
-#### • Work Scheduling
+#### ï¿½ Purchasing View
 
-##### • Flag would deactivate Work Scheduling View creation
+##### ï¿½ Flag would deactivate Purchasing View creation
 
-#### • Quality Management
+#### ï¿½ MRP1
 
- • Accounting 1
+ ï¿½ MRP2
 
- • Costing 1 & 2
+ ï¿½ MRP3
 
- • Storage
+ ï¿½ MRP4
 
- • Warehouse 1
+
+-----
+
+## ZDML ï¿½ Create Default Values
+
+### ï¿½ You can maintain default values for
+
+#### ï¿½ Work Scheduling
+
+##### ï¿½ Flag would deactivate Work Scheduling View creation
+
+#### ï¿½ Quality Management
+
+ ï¿½ Accounting 1
+
+ ï¿½ Costing 1 & 2
+
+ ï¿½ Storage
+
+ ï¿½ Warehouse 1
 
 
 -----
@@ -357,7 +357,7 @@
 
 -----
 
-## ZDML – Create Default Values
+## ZDML ï¿½ Create Default Values
 
 #### DEMO
 
@@ -375,13 +375,13 @@
 
  MRP profile can be maintained via
 
- • MMD1 – initial setup
+ ï¿½ MMD1 ï¿½ initial setup
 
- • MMD2 – change existing
+ ï¿½ MMD2 ï¿½ change existing
 
- • MMD3 – review
+ ï¿½ MMD3 ï¿½ review
 
- • MMD6 – delete MRP profile
+ ï¿½ MMD6 ï¿½ delete MRP profile
 
  MRP profile is 4 characters and is global usable.
 
@@ -390,11 +390,11 @@
 
 ## MRP profile overview
 
-#### All SAP standard MRP fields can be defaulted via MRP profile by activation of the check box in column “Default value”.
+#### All SAP standard MRP fields can be defaulted via MRP profile by activation of the check box in column ï¿½Default valueï¿½.
 
  Defined values will be defaulted into material master when MRP profile will be used during initial material master setup and can be changed afterwards.
 
- It is NOT recommended to use check boxes in column “Fixed Val.”
+ It is NOT recommended to use check boxes in column ï¿½Fixed Val.ï¿½
 
  The values will be referenced into material master fields and cannot be changed on material master but only on MRP profile.
 
@@ -403,15 +403,15 @@
 
 ## Use MRP profile during ZCML initial material creation
 
-#### If you create new material via ZCML the MPR profile can be entered into the field “MRP profile”.
+#### If you create new material via ZCML the MPR profile can be entered into the field ï¿½MRP profileï¿½.
 
  Using MRP profile to default values during ZCML material master creation following logic applies:
 
- • When TPEX value is greater than zero, copy the TPEX value
+ ï¿½ When TPEX value is greater than zero, copy the TPEX value
 
- • When TPEX is zero use MRP profile value.
+ ï¿½ When TPEX is zero use MRP profile value.
 
- • When MRP profile value is blank use ZDML value.
+ ï¿½ When MRP profile value is blank use ZDML value.
 
 
 -----
@@ -427,9 +427,9 @@
 
  Data to be copied from can be specified:
 
- • From the same company org level, plant, sales org.
+ ï¿½ From the same company org level, plant, sales org.
 
- • From different company org level, plant, sales org.
+ ï¿½ From different company org level, plant, sales org.
 
 
 -----
@@ -438,13 +438,13 @@
 
 #### By copying values from an existing materials keep in mind:
 
- • Data are copied from the source plant, sales org.
+ ï¿½ Data are copied from the source plant, sales org.
 
- • Data might not be appropriate for the plant to be copied to.
+ ï¿½ Data might not be appropriate for the plant to be copied to.
 
- • You have to review the values on ZCML screen and updated accordingly.
+ ï¿½ You have to review the values on ZCML screen and updated accordingly.
 
- • Quite risky that materials will be setup with wrong master data.
+ ï¿½ Quite risky that materials will be setup with wrong master data.
 
 
 -----
@@ -453,11 +453,11 @@
 
 #### Contacts:
 
- • Kris Dekiere (kris.dekiere@te.com, phone ++32475350066)
+ ï¿½ Kris Dekiere (kris.dekiere@te.com, phone ++32475350066)
 
- • Walter Fix (wfix@te.com, phone +491735809210)
+ ï¿½ Walter Fix (wfix@te.com, phone +491735809210)
 
- • Your local key user or business unit key user
+ ï¿½ Your local key user or business unit key user
 
  If you see scope for improvement in this document please complete a request to submit to EMEA process team.
 
@@ -488,7 +488,7 @@
 
  29 Sept 2020: WF new ppt template applied; p.5 required material master security roles.
 
- 23 may 2016: WF p.20 ZDML values vs TPEX, p.22 – 25 Defaulting ZCML MRP values via MRP profile, p.28 – 29 Copy existing values from another material.
+ 23 may 2016: WF p.20 ZDML values vs TPEX, p.22 ï¿½ 25 Defaulting ZCML MRP values via MRP profile, p.28 ï¿½ 29 Copy existing values from another material.
 
  5 apr 2016: WF new training document template, p.5 ZCML Overview & Purpose, p.13 ZDML Overview & Purpose, p.7 TPS replaced by TPEX
 

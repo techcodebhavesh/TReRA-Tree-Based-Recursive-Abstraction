@@ -304,3 +304,4 @@ class RetrievalAugmentation:
         with open(path, "wb") as file:
             pickle.dump(self.tree, file)
         logging.info(f"Tree successfully saved to {path}")
+        print(f"Tree successfully saved to {path}")
