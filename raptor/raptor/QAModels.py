@@ -19,7 +19,7 @@ class BaseQAModel(ABC):
         pass
 
 client = Groq(
-    api_key=os.environ.get("GROQ_API_KEY"),
+    api_key="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",
 )
 
 
