@@ -46,13 +46,42 @@ class GEMMAQAModel(BaseQAModel):
         self.model_name = model_name
         self.client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
-    def answer_question(self, context, question):
-        messages = [
-            {
-                "role": "user",
-                "content": f"Given Context: {context} Give the  step-by-step best full answer to the question {question} in a clear and easy-to-follow manner. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
-            }
-        ]
+    def answer_question(self, context, question,prcode):
+        if(prcode=="te_code"):
+            messages = [
+                {
+                    "role": "user",
+                    "content": f"Given Context: {context} Give the  TE CODE required as per the context only to the question {question} in a clear manner. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
+                }
+            ]
+        elif(prcode=="flowchart"):
+            messages = [
+                {
+                    "role": "user",
+                    "content": f"Given Context: {context} Give the  step-by-step best full mermaid js code to the question {question} in a clear and easy-to-follow manner. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
+                }
+            ]
+        elif(prcode=="detailed_answer"):
+            messages = [
+                {
+                    "role": "user",
+                    "content": f"Given Context: {context} Give the  step-by-step best full answer to the question {question} in a clear and easy-to-follow manner. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
+                }
+            ]
+        elif(prcode=="bi_capable"):
+            messages = [
+                {
+                    "role": "user",
+                    "content": f"Given Context: {context} Give the  step-by-step best full mermaid js code for the charts to the question {question} in a clear and easy-to-follow manner.Give the charts and some counters as well  for some numbers. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
+                }
+            ]
+        else:
+            messages = [
+                {
+                    "role": "user",
+                    "content": f"Given Context: {context} Give the  step-by-step best full answer to the question {question} in a clear and easy-to-follow manner. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
+                }
+            ]
         # Remove unsupported arguments (e.g., top_k, top_p)
         response = self.client.chat.completions.create(
             model=self.model_name,
@@ -91,7 +120,7 @@ def load_text_files(directory):
                 combined_text += file.read() + "\n"
     return combined_text
 
-processed_text_directory = '../processed_output'  # Path to the folder containing processed text files
+processed_text_directory = 'D:/PDF_CONNECT/processed_output'  # Path to the folder containing processed text files
 combined_text = load_text_files(processed_text_directory)
 RA.add_documents(combined_text)
 
