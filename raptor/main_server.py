@@ -128,11 +128,12 @@ RA.add_documents(combined_text)
 def ask_question():
     data = request.get_json()
     question = data.get('question')
+    prcode = data.get('prcode')
     
     if not question:
         return jsonify({'error': 'Question is required'}), 400
 
-    answer = RA.answer_question(question=question)
+    answer = RA.answer_question(question=question,prcode=prcode)
     return jsonify({'answer': answer})
 
 if __name__ == '__main__':
