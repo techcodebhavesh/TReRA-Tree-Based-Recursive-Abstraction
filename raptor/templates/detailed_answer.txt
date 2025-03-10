@@ -1,0 +1,11 @@
+Given Context: {{context}}  
+Provide a **detailed step-by-step answer** to the following question:  
+**Question:** {{question}}  
+
+### Explanation:
+- Step 1: [Explain]
+- Step 2: [Explain]
+- Step 3: [Explain]
+
+### Additional Visuals:
+- Use **tables**, **bullet points**, and **diagrams** where necessary.

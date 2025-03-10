@@ -1,0 +1,10 @@
+Given Context: {{context}}  
+Generate a **step-by-step mermaid.js flowchart** to answer the question:  
+**Question:** {{question}}  
+
+### Response Format:
+```mermaid
+[Flowchart code here]
+```
+
+- Provide a brief explanation below the chart.

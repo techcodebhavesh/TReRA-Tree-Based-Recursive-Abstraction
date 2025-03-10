@@ -1,0 +1,11 @@
+Given Context: {{context}}  
+Generate **charts and counters** based on the data for the question:  
+**Question:** {{question}}  
+
+### Response Format:
+```mermaid
+[Mermaid.js chart code]
+```
+
+- Also include relevant **numeric counters** summarizing key insights.
+- Explain how the data is visualized.

@@ -1,0 +1,7 @@
+Given Context: {{context}}  
+Provide the **best possible answer** to the following question:  
+**Question:** {{question}}  
+
+### Explanation:
+- Present the answer in a structured manner.
+- Include visuals and examples for better understanding.

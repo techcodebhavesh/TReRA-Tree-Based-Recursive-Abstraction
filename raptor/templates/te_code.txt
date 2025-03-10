@@ -1,0 +1,7 @@
+Given Context: {{context}}  
+Provide the required **Transaction Code** based on the context for the question:  
+**Question:** {{question}}  
+
+### Response Format:
+- **Transaction Code:** [Your Answer]  
+- **Details:** [Explain why this code is appropriate]

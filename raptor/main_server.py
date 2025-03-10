@@ -17,6 +17,8 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
+prcode = ""
+
 # Define the Summarization Model
 class GEMMASummarizationModel(BaseSummarizationModel):
     def __init__(self, model_name="llama-3.3-70b-versatile"):
@@ -42,47 +44,30 @@ class GEMMASummarizationModel(BaseSummarizationModel):
 
 # Define the QA Model
 class GEMMAQAModel(BaseQAModel):
-    def __init__(self, model_name="llama-3.3-70b-versatile"):
+    def __init__(self, model_name="llama-3.3-70b-versatile", template_dir="templates"):
         self.model_name = model_name
         self.client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+        self.template_dir = template_dir
 
-    def answer_question(self, context, question,prcode):
-        if(prcode=="te_code"):
-            messages = [
-                {
-                    "role": "user",
-                    "content": f"Given Context: {context} Give the  TE CODE required as per the context only to the question {question} in a clear manner. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
-                }
-            ]
-        elif(prcode=="flowchart"):
-            messages = [
-                {
-                    "role": "user",
-                    "content": f"Given Context: {context} Give the  step-by-step best full mermaid js code to the question {question} in a clear and easy-to-follow manner. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
-                }
-            ]
-        elif(prcode=="detailed_answer"):
-            messages = [
-                {
-                    "role": "user",
-                    "content": f"Given Context: {context} Give the  step-by-step best full answer to the question {question} in a clear and easy-to-follow manner. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
-                }
-            ]
-        elif(prcode=="bi_capable"):
-            messages = [
-                {
-                    "role": "user",
-                    "content": f"Given Context: {context} Give the  step-by-step best full mermaid js code for the charts to the question {question} in a clear and easy-to-follow manner.Give the charts and some counters as well  for some numbers. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
-                }
-            ]
-        else:
-            messages = [
-                {
-                    "role": "user",
-                    "content": f"Given Context: {context} Give the  step-by-step best full answer to the question {question} in a clear and easy-to-follow manner. Present the response in Markdown format with excellent UI/UX design, using headings, bullet points, and well-formatted sections for readability. Incorporate relevant charts, diagrams, and visual elements to enhance understanding and navigation. Ensure the explanation is detailed yet concise, making it easy for the reader to grasp the process intuitively.",
-                }
-            ]
-        # Remove unsupported arguments (e.g., top_k, top_p)
+    def load_template(self, prcode):
+        """Reads the appropriate template file based on prcode."""
+        template_file = os.path.join(self.template_dir, f"{prcode}.txt")
+        if not os.path.exists(template_file):
+            template_file = os.path.join(self.template_dir, "default.txt")  # Fallback template
+        
+        with open(template_file, "r", encoding="utf-8") as file:
+            return file.read()
+
+    def answer_question(self, context, question):
+        global prcode
+        template_content = self.load_template(prcode)
+        
+        # Replace placeholders
+        prompt = template_content.replace("{{context}}", context).replace("{{question}}", question)
+        
+        print(f"Executing {prcode.capitalize() if prcode else 'Default'}")
+        messages = [{"role": "user", "content": prompt}]
+        
         response = self.client.chat.completions.create(
             model=self.model_name,
             messages=messages,
@@ -120,12 +105,13 @@ def load_text_files(directory):
                 combined_text += file.read() + "\n"
     return combined_text
 
-processed_text_directory = 'D:/PDF_CONNECT/processed_output'  # Path to the folder containing processed text files
+processed_text_directory = '../processed_output'  # Path to the folder containing processed text files
 combined_text = load_text_files(processed_text_directory)
 RA.add_documents(combined_text)
 
 @app.route('/ask', methods=['POST'])
 def ask_question():
+    global prcode
     data = request.get_json()
     question = data.get('question')
     prcode = data.get('prcode')
@@ -133,7 +119,8 @@ def ask_question():
     if not question:
         return jsonify({'error': 'Question is required'}), 400
 
-    answer = RA.answer_question(question=question,prcode=prcode)
+    answer = RA.answer_question(question=question)
+    prcode=None
     return jsonify({'answer': answer})
 
 if __name__ == '__main__':
